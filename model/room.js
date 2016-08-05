@@ -15,11 +15,11 @@ var RoomSchema = new Schema({
     type: Number,
     required: true
   },
-  master:{
+  master_id:{
     type: String,
     required: true
   },
-  joinuser:[
+  joinusers:[
     {
       juser_id : String,
       juser_name : String,

@@ -1,0 +1,101 @@
+//barcode : 바코드의 정보
+//changeNumber : 게임을 시작할 때 바코드 정보 처리를 위해 생성한 랜덤한 숫자(각 게임마다 랜덤한 값을 가진다)
+function barcodeToItem(barcode, changeNumber){
+  return (barcode % changeNumber) % 100;
+}
+
+//랜덤 생성 함수
+function generateRandom(min, max) {
+   return Math.floor(Math.random()*max) + min;
+}
+
+//changeNumber 생성구문
+var changeNumber = generateRandom(100, 100000);
+
+//공격 아이템 객체
+//기본공격력 5, 최대 공격력
+var attack = {
+  value:5,
+  upgrade:1
+  table:new Array(0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 5),
+
+  getValue:function(){
+    return (this.value + this.table[generateRandom(0, 16)]) * upgrade;
+  }
+}
+
+//회복 아이템 객체
+//기본회복치 5, 최대 회복치
+var heal = {
+  value:5,
+  table:new Array(0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3),
+  upgrade:1
+
+  getValue:function(){
+    return (this.value + this.table[generateRandom(0, 13)]) * upgrade;
+  }
+}
+
+//최대 체력치 증가 아이템 객체
+//기본 증가량 15, 최대 증가량 30
+var increaseHP = {
+  value:15,
+  table:new Array(0, 0, 0, 0, 0, 3, 3, 3, 3, 6, 6, 6, 9, 9, 12, 15),
+
+  getValue:function(){
+    return this.value + this.table[generateRandom(0, 16)];
+  }
+}
+
+//일정시간 방어 아이템 객체
+//기본 방어시간 10, 최대 방어시간 15
+var defense = {
+  value:10,
+  table:new Array(0, 1, 2, 3, 4, 5),
+
+  getValue:function(){
+    return this.value + this.table[generateRandom(0, 6)];
+  }
+}
+
+//상대 킬 감소 아이템 객체
+var decreaseKill = {
+  value:1,
+
+  getValue:function(){
+    return this.value;
+  }
+}
+
+//스턴 아이템 객체
+//기본 스턴시간 10, 최대 스턴시간 15
+var stun = {
+  value:10,
+  table:new Array(0, 0, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5),
+
+  getValue:function(){
+    return this.value + this.table[generateRandom(0, 12)];
+  }
+}
+
+//지정한 상대의 돈을 절반으로
+var decreaseMoney = {
+  value:0.5,
+
+  getValue:function(){
+    return this.value;
+  }
+}
+
+
+
+//확인용 코드
+var barcode = 100000;
+//console.log(barcodeToItem(barcode, changeNumber));
+//console.log(attack.getValue());
+//console.log(heal.getValue());
+//console.log(increaseHP.getValue());
+//console.log(defense.getValue());
+//console.log(decreaseKill.getValue());
+//console.log(stun.getValue());
+//console.log(decreaseMoney.getValue());//
