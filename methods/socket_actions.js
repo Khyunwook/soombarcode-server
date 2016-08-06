@@ -32,7 +32,7 @@ var functions = {
 
           //addJoinuser
           var promise = room_actions.addJoinuser(socket.room, joinuser);
-          promise.then((updateroom)=>{
+          promise.then(function (updateroom){
             console.log('update_room',updateroom[0].joinusers);
             io.in(socket.room).emit('userlist',{ users : updateroom[0].joinusers });
           });
@@ -42,7 +42,7 @@ var functions = {
     });
 
     //방입장할때
-    socket.on('joinroomupdate', (data)=>{
+    socket.on('joinroomupdate', functions(data){
        var room_id = data.room.room_id;
        var joinuser = {
          juser_id : data.juser.join_user_id,
@@ -50,25 +50,25 @@ var functions = {
        };
        console.log('joinroomupdate',data);
        var promise = room_actions.updateJoinuser(room_id, joinuser);
-       promise.then((updateroom)=>{
+       promise.then(functions(updateroom){
        io.in(socket.room).emit('userlist',{ users : updateroom[0].joinusers });
        });
 
     });
 
     //방에서 나갈때
-    socket.on('outroomupdate', (data) =>{
+    socket.on('outroomupdate', function(data) {
       var room_id = data.room.room_id;
       var user_id = data.user_id;
       delete rooms[socket.room].socket_ids[user_id];
       var promise = room_actions.deleteJoinuser(room_id,user_id);
-      promise.then((updateroom)=>{
+      promise.then(function(updateroom){
         io.in(socket.room).emit('userlist',{ users : updateroom[0].joinusers });
       })
     });
 
     //게임시작할때
-    socket.on('startgame',(data)=>{
+    socket.on('startgame',function(data){
       console.log('startgame data',data);
       var usersinfo = [];
       for(var i=0; i<data.Ateam.length; i++){
@@ -79,7 +79,7 @@ var functions = {
       }
       console.log('playgameuserinfo',usersinfo);
       var promise = gameplay_actions.makegame(data.room.room_id ,usersinfo);
-      promise.then((makegame)=>{
+      promise.then(function(makegame){
         //console.log('makegame res1',makegame[0].usersinfo);
         //console.log('makegame res2',makegame.usersinfo);
         io.in(socket.room).emit('playgame',{ room_id : makegame[0].room_id ,users:makegame[0].usersinfo});
