@@ -1,5 +1,6 @@
 var socket = require( 'socket.io' ),
-    room_actions = require('./room_actions');
+    room_actions = require('./room_actions'),
+    gameplay_actions = require('./gameplay_actions');
 
 var numUsers =0;
 var rooms = [];
@@ -11,6 +12,7 @@ var functions = {
     io.on('connection', function(socket){
       console.log('User connected');
 
+      //방만들때
       socket.on('joinroom', function( data ){
           socket.join(data.room.room_id);
 
@@ -39,6 +41,7 @@ var functions = {
           rooms[socket.room].socket_ids[userid] = socket.id;
     });
 
+    //방입장할때
     socket.on('joinroomupdate', (data)=>{
        var room_id = data.room.room_id;
        var joinuser = {
@@ -53,6 +56,7 @@ var functions = {
 
     });
 
+    //방에서 나갈때
     socket.on('outroomupdate', (data) =>{
       var room_id = data.room.room_id;
       var user_id = data.user_id;
@@ -62,8 +66,28 @@ var functions = {
         io.in(socket.room).emit('userlist',{ users : updateroom[0].joinusers });
       })
     });
+
+    //게임시작할때
     socket.on('startgame',(data)=>{
-      io.in(socket.room).emit('playgame');
+      console.log('startgame data',data);
+      var usersinfo = [];
+      for(var i=0; i<data.Ateam.length; i++){
+        usersinfo.push(data.Ateam[i]);
+      }
+      for(var i=0; i<data.Bteam.length; i++){
+        usersinfo.push(data.Bteam[i]);
+      }
+      console.log('playgameuserinfo',usersinfo);
+      var promise = gameplay_actions.makegame(data.room.room_id ,usersinfo);
+      promise.then((makegame)=>{
+        //console.log('makegame res1',makegame[0].usersinfo);
+        //console.log('makegame res2',makegame.usersinfo);
+        io.in(socket.room).emit('playgame',{ room_id : makegame[0].room_id ,users:makegame[0].usersinfo});
+
+      });
+
+
+
     });
     socket.on('disconnect',function( data ){
 
