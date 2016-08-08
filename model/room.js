@@ -11,7 +11,7 @@ var RoomSchema = new Schema({
     type: String,
     required: false
   },
-  nton:{
+  difficult:{
     type: Number,
     required: true
   },

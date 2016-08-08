@@ -8,3 +8,4 @@ npm install bcrypt --save-dev
 npm install passport passport-jwt jwt-simple
 npm install socket.io
 npm install -g typescript
+npm install es6-shim

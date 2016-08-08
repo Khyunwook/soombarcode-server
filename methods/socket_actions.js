@@ -42,7 +42,7 @@ var functions = {
     });
 
     //방입장할때
-    socket.on('joinroomupdate', functions(data){
+    socket.on('joinroomupdate', function(data){
        var room_id = data.room.room_id;
        var joinuser = {
          juser_id : data.juser.join_user_id,
@@ -50,7 +50,7 @@ var functions = {
        };
        console.log('joinroomupdate',data);
        var promise = room_actions.updateJoinuser(room_id, joinuser);
-       promise.then(functions(updateroom){
+       promise.then(function(updateroom){
        io.in(socket.room).emit('userlist',{ users : updateroom[0].joinusers });
        });
 
