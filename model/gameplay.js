@@ -12,8 +12,7 @@ var GamePlaySchema = new Schema({
     {
       juser_id : String,
       juser_name : String,
-      team : String,
-      hp : Number,
+      is_clue : Number,
       live : Boolean
     }
   ],

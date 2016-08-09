@@ -10,7 +10,7 @@ var functions = {
         var newRoom = Room({
               roomname: req.body.roomname,
               password: req.body.password,
-              nton: req.body.nton,
+              difficult: req.body.difficult,
               master_id: req.body.master_id
           });
 
@@ -39,7 +39,7 @@ var functions = {
       return promise;
     },
     updateJoinuser: function(id,set_map){
-      Room.update( { _id : ObjectId(id), 'joinusers.juser_id': set_map.juser_id }, { $set : { 'joinusers.$.team' : set_map.team}} ).exec();
+      Room.update( { _id : ObjectId(id), 'joinusers.juser_id': set_map.juser_id }, { $set : { 'joinusers.$.ready' : set_map.ready}} ).exec();
       var promise = Room.find( {_id: ObjectId(id)}).exec();
       return promise;
     },

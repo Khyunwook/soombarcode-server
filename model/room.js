@@ -23,7 +23,7 @@ var RoomSchema = new Schema({
     {
       juser_id : String,
       juser_name : String,
-      team : String
+      ready : Boolean
     }
   ],
 });
