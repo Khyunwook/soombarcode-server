@@ -9,7 +9,9 @@ var functions = {
     makegame: function(r_id, users){
       var userlen = users.length;
       var cluen = Math.ceil(userlen/3);
+      console.log('preshuffle',users);
       users = this.shuffle(users);
+      console.log('nextshuffle',users);
       var usersinfo=[];
       for(var i=0; i<userlen; i++){
         var userinfo ={
@@ -32,6 +34,18 @@ var functions = {
     //  var promise  = GamePlay.find({ "room_id" : r_id }).exec();
     //  return promise;
     },
+    killUsers : function ( room_id, kill_user){
+      console.log('killuser',kill_user);
+      GamePlay.update( {room_id: room_id , 'usersinfo.juser_id' : kill_user }, {$set : { 'usersinfo.$.live' : false }},{upsert:true},function(err,data){
+        if(err){
+          console.log(err);
+        }else{
+          console.log("Successfully added");
+        }
+      });//.exec();
+      var promise = GamePlay.find( { room_id : room_id }).exec();
+      return promise;
+    },
     shuffle: function(array) {
       var counter = array.length;
 
@@ -46,6 +60,10 @@ var functions = {
       }
 
       return array;
+    },
+
+    countdown: function(){
+
     }
 
 };
