@@ -15,12 +15,12 @@ var functions = {
       Curios.find({room_id : room_id, user_id : user_id},function(err, data){
         if(err){
           res.send(err);
-        }
-        if(data[0]){
-          console.log('Curios exist',data[0]);
         }else{
-          newCurios.save(function(err, newCurios){
-            if (err){
+          if(data){
+            console.log('Curios exist',data);
+          }else{
+            newCurios.save(function(err, newCurios){
+              if (err){
                 console.log('curioserr',err);
                 res.json({success:false, msg:'Failed to save'})
             }
@@ -28,6 +28,7 @@ var functions = {
                 res.json({success:true, msg:'Successfully saved'});
             }
           });
+          }
         }
       });
     },

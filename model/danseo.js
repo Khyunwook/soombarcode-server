@@ -5,17 +5,17 @@ var DanSeoSchema = new Schema({
   room_id : {
     type: String,
     unique: false,
-    required: true
+    required: false
   },
   num : {
     type: Number,
     unique: false,
-    required: true
+    required: false
   },
   danseo : {
       type: String,
-      unique: true,
-      required: true
+      unique: false,
+      required: false
   }
 
 });

@@ -64,7 +64,7 @@ var functions = {
       DanSeo.find( {room_id : room_id, num : hash_id },function(err,data){
         if(err)
           res.send(err);
-        if(data[0]){
+        if(data){
           console.log("tttt",data[0]);
           res.json({success : true , danseo : data[0]});
         }else{
